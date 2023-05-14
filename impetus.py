@@ -54,9 +54,7 @@ def get_output():
     output_display.configure(state=NORMAL)
     for line in iter(shell.stdout.readline, ''):
         str_line = str(line.decode('UTF-8')).rstrip()
-        if str_line == '':
-            break
-        else:
+        if str_line != '':
             current_output = str_line + '\n'
             root.event_generate("<<event1>>")
         sys.stdout.flush
