@@ -23,14 +23,19 @@ output_display.configure(state=DISABLED, insertbackground='#00b000', \
                          highlightcolor='#00b000', fg='#00b000')
 bottom_frame = Frame(root, width=400, height=40)
 bottom_frame.pack(fill=X, side="bottom", expand=False)
-command_entry = Text(bottom_frame, width=60, height=7);
+
+entry_frame = Frame(bottom_frame, width=400, height=40)
+entry_frame.pack(fill=X, expand=True)
+command_label = Label(entry_frame, text='Command Input:', fg='#00b000')
+command_label.pack(side='left')
+command_entry = Text(entry_frame, width=60, height=7);
 command_entry.pack(fill=X, side="top", expand=False)
 command_entry.configure(insertbackground='#00b000', \
                         highlightcolor='#00b000', fg='#00b000')
 password_frame = Frame(bottom_frame, width=400, height=40)
 password_frame.pack(fill=X, expand=True)
 passwor_label = Label(password_frame, text='Hidden Input:', fg='#00b000')
-passwor_label.pack(side='left')
+passwor_label.pack(side='left', ipadx=8)
 password_entry = Entry(password_frame, show="*", width=60)
 password_entry.pack(side='right', fill=X, expand=True)
 password_entry.configure(insertbackground='#00bf00', \
