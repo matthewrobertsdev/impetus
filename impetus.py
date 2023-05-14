@@ -6,10 +6,10 @@ import threading
 
 encoding = 'latin1'
 shell = subprocess.Popen('/bin/bash', \
-    env={"PATH": "/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"}, \
+    env={"PATH": "/Users/mattroberts/.rbenv/shims:/opt/homebrew/opt/ruby/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Library/Frameworks/Python.framework/Versions/3.8/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/usr/texbin:/usr/local/share/dotnet:/usr/local/mysql/bin:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Applications/Xamarin Workbooks.app/Contents/SharedSupport/path-bin:/Users/mattroberts/.rvm/bin"}, \
                          stdin=subprocess.PIPE,
              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-
+#"/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:"}
 current_output = ''
   
 root = Tk()
@@ -29,7 +29,7 @@ command_entry.configure(insertbackground='#00b000', \
                         highlightcolor='#00b000', fg='#00b000')
 password_frame = Frame(bottom_frame, width=400, height=40)
 password_frame.pack(fill=X, expand=True)
-passwor_label = Label(password_frame, text='Hidden:', fg='#00b000')
+passwor_label = Label(password_frame, text='Hidden Input:', fg='#00b000')
 passwor_label.pack(side='left')
 password_entry = Entry(password_frame, show="*", width=60)
 password_entry.pack(side='right', fill=X, expand=True)
@@ -47,6 +47,7 @@ def handle_command(event):
     shell.stdin.write(bytes('pwd\n', 'utf-8'))
     shell.stdin.flush()
     output_display.configure(state=DISABLED)
+    output_display.see(END)
     return "break"
 
 def get_output():
@@ -72,12 +73,14 @@ def get_error_ouptut():
             root.event_generate("<<event1>>")
         sys.stderr.flush
     output_display.configure(state=DISABLED)
+    output_display.see(END)
 
 def write_output(event):
     global current_output
     output_display.configure(state=NORMAL)
     output_display.insert(END, current_output)
     output_display.configure(state=DISABLED)
+    output_display.see(END)
     
 
 command_entry.bind("<Return>",handle_command)
