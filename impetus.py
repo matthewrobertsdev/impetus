@@ -58,6 +58,19 @@ def get_output():
             current_output = str_line + '\n'
             root.event_generate("<<event1>>")
         sys.stdout.flush
+        
+    output_display.configure(state=DISABLED)
+
+
+def get_error_ouptut():
+    global current_output
+    output_display.configure(state=NORMAL)
+    for line in iter(shell.stderr.readline, ''):
+        str_line = str(line.decode('UTF-8')).rstrip()
+        if str_line != '':
+            current_output = str_line + '\n'
+            root.event_generate("<<event1>>")
+        sys.stderr.flush
     output_display.configure(state=DISABLED)
 
 def write_output(event):
@@ -73,6 +86,9 @@ command_entry.focus_set()
 output_thread = threading.Thread(target=get_output)
 output_thread.daemon = True
 output_thread.start()
+error_output_thread = threading.Thread(target=get_error_ouptut)
+error_output_thread.daemon = True
+error_output_thread.start()
 root.bind("<<event1>>", write_output)
 
 shell.stdin.write(bytes('pwd\n', 'utf-8'))
